@@ -1,11 +1,11 @@
 global:
   clusterDomain: cluster.local
 
-# Required configuration item
+# required: regex for allowed node DNS names
 providerRegex: ""
 # optional, specified as a string (enclosed with ""). if left empty, defaults to 367 days
 maxExpirationSeconds: ""
-# optional, permits to bypass dns resolution checks. default: false
+# optional, permits bypassing dns resolution checks. default: false
 bypassDnsResolution: false
 # number of DNS SAN names allowed in a certificate request. defaults to 1
 allowedDnsNames: 1
@@ -13,9 +13,9 @@ allowedDnsNames: 1
 ignoreNonSystemNode: false
 # optional, prevents csr denial, i.e. only lets kubelet-csr-approver approve valid CSRs but ignore other CSRs
 skipDenyStep: false
-# set this parameter to true to ignore mismatching DNS name and hostname
+# set this parameter to true to allow DNS names that do not start with the node hostname
 bypassHostnameCheck: false
-# optional, list of IP (IPv4, IPv6) subnets that are allowed to submit CSRs
+# required: IP ranges used by your nodes
 providerIpPrefixes: []
 #   - 192.168.8.0/22
 #   - fc00::/7
