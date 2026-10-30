@@ -11,14 +11,16 @@ recent three Kubernetes minor releases](https://kubernetes.io/releases/).
 
 ## Helm Install
 
-Adjust `providerRegex`, `providerIpPrefixes` and `maxExpirationSeconds` as needed.
+Set `providerRegex` to match your node DNS names and `providerIpPrefixes` to the
+IP ranges used by your nodes. Both values are required by the chart. Adjust
+`maxExpirationSeconds` as needed.
 
 ```bash
 helm repo add kubelet-csr-approver https://postfinance.github.io/kubelet-csr-approver
 helm install kubelet-csr-approver kubelet-csr-approver/kubelet-csr-approver -n kube-system \
   --set providerRegex='^node-\w*\.int\.company\.ch$' \
-  --set providerIpPrefixes='192.168.8.0/22' \
-  --set maxExpirationSeconds='86400'
+  --set providerIpPrefixes='{192.168.8.0/22}' \
+  --set maxExpirationSeconds='86400' \
   --set bypassDnsResolution='false'
 ```
 
