@@ -9,6 +9,12 @@ spec:
 {{- if and (gt (int .Values.replicas) 1) (not .Values.leaderElection) }}
 {{- fail "leaderElection needs to be enabled in order to use more than 1 replica" }}
 {{- end }}
+{{- if not .Values.providerRegex }}
+{{- fail "providerRegex must be specified" }}
+{{- end }}
+{{- if not .Values.providerIpPrefixes }}
+{{- fail "providerIpPrefixes must be specified" }}
+{{- end }}
   replicas: {{ .Values.replicas }}
   selector:
     matchLabels:
@@ -100,6 +106,10 @@ spec:
               protocol: TCP
           {{- end }}
           livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8081
+          readinessProbe:
             httpGet:
               path: /healthz
               port: 8081
